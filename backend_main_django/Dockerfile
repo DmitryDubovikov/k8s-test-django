@@ -11,6 +11,6 @@ RUN apt update && apt install -y python3-pip                                  \
     && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/*.list
 COPY unit_config.json /docker-entrypoint.d/
 COPY . /code/
-RUN SECRET_KEY=empty python manage.py collectstatic --noinput
+# RUN SECRET_KEY=empty python manage.py collectstatic --noinput
 EXPOSE 80
 VOLUME ["/media"]

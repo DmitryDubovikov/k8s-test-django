@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: djangoapp
+spec:
+  containers:
+    - name: djangoapp
+      image: django_app:alpine
+      imagePullPolicy: Never
+      ports:
+        - containerPort: 90
