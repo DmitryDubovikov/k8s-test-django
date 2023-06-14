@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:12.0-alpine
+    ports:
+      - "192.168.0.83:5432:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB-test_k8s}
+      POSTGRES_USER: ${POSTGRES_USER-test_k8s}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD-OwOtBep9Frut}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:
