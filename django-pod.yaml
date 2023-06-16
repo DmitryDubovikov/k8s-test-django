@@ -8,4 +8,4 @@ spec:
       image: django_app:01
       imagePullPolicy: Never
       ports:
-        - containerPort: 90
+        - containerPort: 8000
