@@ -111,7 +111,7 @@ kubectl create cm django-cm --from-env-file=backend_main_django/.env --dry-run=c
 ```
         envFrom:
           - configMapRef:
-            name: django-cm
+              name: django-cm
 ``` 
 Сбилдим образ без .env файла (для чистоты эксперимента), назовём с тегом 02 django_app:02, запушим новый образ в minikube, исправим django-deploy, чтобы использовал django_app:02.
 ```
