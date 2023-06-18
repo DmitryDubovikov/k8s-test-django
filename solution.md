@@ -94,7 +94,7 @@ kubectl create service nodeport django-service --tcp=80:80 --node-port=30080 --d
 kubectl apply -f django-deploy.yaml
 kubectl apply -f django-service.yaml
 ```
-Узнаём minikube ip (192.168.59.100) и проверяем, что админка работает на http://192.168.59.100:30080/admin/
+Узнаём minikube ip (192.168.59.100) и проверяем (не забыв поднять контейнер с PostgreSQL), что админка работает на http://192.168.59.100:30080/admin/
 
 ### Вариант с type: LoadBalancer 
 ...
@@ -102,4 +102,29 @@ kubectl apply -f django-service.yaml
 ### Вариант с type: Ingress 
 ...
 
-## Step 9
+## Step 11
+Создаём ConfigMap yaml на основе нашего .env:
+```
+kubectl create cm django-cm --from-env-file=backend_main_django/.env --dry-run=client -o yaml > django-cm.yaml
+```
+В django-deploy добавляем envFrom configMapRef
+```
+        envFrom:
+          - configMapRef:
+            name: django-cm
+``` 
+Сбилдим образ без .env файла (для чистоты эксперимента), назовём с тегом 02 django_app:02, запушим новый образ в minikube, исправим django-deploy, чтобы использовал django_app:02.
+```
+& minikube -p minikube docker-env --shell powershell | Invoke-Expression
+docker build -t django_app:02 .
+minikube image ls
+```
+
+Сначала применяем ConfigMap, потом остальное:
+```
+kubectl apply -f django-cm.yaml
+kubectl apply -f django-deploy.yaml
+kubectl apply -f django-service.yaml
+```
+
+## Step 12
