@@ -128,3 +128,29 @@ kubectl apply -f django-service.yaml
 ```
 
 ## Step 12
+
+Создадим Ingress:
+```
+kubectl create ingress django-ingress --rule="star-burger.test/=django-service:80" --dry-run=client -o yaml > django-ingress.yaml
+```
+
+Добавим в hosts: 192.168.59.100 star-burger.test
+
+Проверим name, port, изменим pathType на Prefix:
+```
+      - backend:
+          service:
+            name: django-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+```
+Применим ingress, предварительно применив всё предыдущее:
+```
+kubectl apply -f django-cm.yaml
+kubectl apply -f django-deploy.yaml
+kubectl apply -f django-service.yaml
+kubectl apply -f django-ingress.yaml
+```
+Зайдём в админку: http://star-burger.test/admin/

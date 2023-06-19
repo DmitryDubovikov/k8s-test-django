@@ -39,5 +39,9 @@ $ docker-compose run web ./manage.py createsuperuser
 kubectl apply -f django-cm.yaml
 kubectl apply -f django-deploy.yaml
 kubectl apply -f django-service.yaml
+kubectl apply -f django-ingress.yaml
 ```
+
 Узнаём minikube ip (192.168.59.100) и проверяем (не забыв поднять контейнер с PostgreSQL), что админка работает на http://192.168.59.100:30080/admin/
+
+Зайдём в админку: http://star-burger.test/admin/
