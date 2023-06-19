@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: django-clearsessions-cronjob
+spec:
+  schedule: "0 0 1 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: django
+              image: django_app:02
+              command: ["python", "manage.py", "clearsessions"]
+              envFrom:
+                - configMapRef:
+                    name: django-cm
+  successfulJobsHistoryLimit: 1

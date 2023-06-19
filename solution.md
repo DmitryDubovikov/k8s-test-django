@@ -185,3 +185,14 @@ sessions = Session.objects.all()
 sessions
 len(sessions)
 ```
+
+## Step 14
+
+Применяем cronjob
+```
+kubectl apply -f cronjob-clearsessions.yaml
+```
+Триггерим job из cronjob из dashboard, заранее следя в терминале за отработкой задачи:
+```
+kubectl get jobs --watch
+```

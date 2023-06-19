@@ -5,7 +5,7 @@ metadata:
 spec:
   restartPolicy: Never
   containers:
-    - name: django
+    - name: django-app
       image: django_app:02
       command: ["python", "manage.py", "clearsessions"]
       envFrom:
