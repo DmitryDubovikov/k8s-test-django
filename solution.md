@@ -68,7 +68,6 @@ kubectl exec -it django-pod -- /bin/bash
 
 ### Вариант с type: NodePort
 
-**(Пришлось временно(?) перебилдить django_app:01 с указанием ALLOWED_HOSTS = ["*"])**
 
 Удаляем под из предыдущего шага:
 ```
@@ -162,3 +161,27 @@ kubectl apply -f django-service.yaml
 kubectl apply -f django-ingress.yaml
 ```
 Зайдём в админку: http://star-burger.test/admin/
+
+
+## Step 13
+Посмотрим, что хранится в Session
+```
+kubectl exec -it django-deploy-667d854c89-dnfxx -- /bin/bash
+./manage.py shell
+
+from django.contrib.sessions.models import Session
+sessions = Session.objects.all()
+sessions
+len(sessions)
+```
+
+Запускаем под:
+```
+kubectl apply -f django-clearsessions-pod.yaml
+```
+Проверяем, что сессий стало меньше (в моем примере было 4, стало 3)
+```
+sessions = Session.objects.all()
+sessions
+len(sessions)
+```
