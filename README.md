@@ -34,6 +34,13 @@ $ docker-compose run web ./manage.py createsuperuser
 `DATABASE_URL` -- адрес для подключения к базе данных PostgreSQL. Другие СУБД сайт не поддерживает. [Формат записи](https://github.com/jacobian/dj-database-url#url-schema).
 
 # Инструкции по деплою:
+Check and enable ingress
+```
+minikube addons list
+minikube addons enable ingress
+minikube addons list
+| ingress                     | minikube | enabled ✅   | Kubernetes                     |
+```
 Сначала применяем ConfigMap, потом остальное:
 ```
 kubectl apply -f django-cm.yaml

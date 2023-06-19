@@ -129,6 +129,14 @@ kubectl apply -f django-service.yaml
 
 ## Step 12
 
+Check and enable ingress
+```
+minikube addons list
+minikube addons enable ingress
+minikube addons list
+| ingress                     | minikube | enabled ✅   | Kubernetes                     |
+```
+
 Создадим Ingress:
 ```
 kubectl create ingress django-ingress --rule="star-burger.test/=django-service:80" --dry-run=client -o yaml > django-ingress.yaml
