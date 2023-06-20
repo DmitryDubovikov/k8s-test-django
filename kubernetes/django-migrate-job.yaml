@@ -3,8 +3,9 @@ kind: Job
 metadata:
   name: django-migrate-job
 spec:
+  ttlSecondsAfterFinished: 60
   template:
-    spec:
+    spec:      
       restartPolicy: Never
       containers:
         - name: django
