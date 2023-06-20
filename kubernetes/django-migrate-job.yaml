@@ -4,6 +4,8 @@ metadata:
   name: django-migrate-job
 spec:
   ttlSecondsAfterFinished: 60
+  backoffLimit: 2
+  activeDeadlineSeconds: 60
   template:
     spec:      
       restartPolicy: Never
