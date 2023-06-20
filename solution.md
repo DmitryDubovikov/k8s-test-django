@@ -196,3 +196,11 @@ kubectl apply -f cronjob-clearsessions.yaml
 ```
 kubectl get jobs --watch
 ```
+
+## Step 16
+
+```
+kubectl apply -f django-migrate-job.yaml
+kubectl logs jobs/django-migrate-job
+```
+Остаётся job и pod. ttlSecondsAfterFinished не решает проблему: strict decoding error: unknown field "spec.template.spec.ttlSecondsAfterFinished"
