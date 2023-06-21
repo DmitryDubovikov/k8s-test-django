@@ -49,15 +49,7 @@ kubectl apply -f django-service.yaml
 kubectl apply -f django-ingress.yaml
 ```
 
-Узнаём minikube ip (192.168.59.100) и проверяем (не забыв поднять контейнер с PostgreSQL), что админка работает на http://192.168.59.100:30080/admin/
 
 Зайдём в админку: http://star-burger.test/admin/
 
-Для регулярного удаления сессий применяем cronjob
-```
-kubectl apply -f cronjob-clearsessions.yaml
-```
-Триггерим job из cronjob из dashboard, заранее следя в терминале за отработкой задачи:
-```
-kubectl get jobs --watch
-```
+Для использования PostgreSQL внутри minikube, а не снаружи, см. step 17 в файле solution.md

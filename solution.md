@@ -204,3 +204,37 @@ kubectl apply -f django-migrate-job.yaml
 kubectl logs jobs/django-migrate-job
 ```
 Остаётся job и pod. ttlSecondsAfterFinished не решает проблему: strict decoding error: unknown field "spec.template.spec.ttlSecondsAfterFinished"
+
+
+## Step 17
+
+```
+helm install my-release oci://registry-1.docker.io/bitnamicharts/postgresql
+```
+To uninstall/delete the my-release deployment:
+```
+helm delete my-release
+```
+Подключаемся к PG:
+```
+PS C:\Users\dima> $secret = kubectl get secret --namespace default my-release-postgresql -o jsonpath="{.data.postgres-password}"
+PS C:\Users\dima> $POSTGRES_PASSWORD = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($secret))
+PS C:\Users\dima> echo $POSTGRES_PASSWORD
+18u28A1Xiw
+PS C:\Users\dima> kubectl run my-release-postgresql-client --rm --tty -i --restart='Never' --namespace default --image docker.io/bitnami/postgresql:15.3.0-debian-11-r7 --env="PGPASSWORD=$POSTGRES_PASSWORD" --command -- psql --host my-release-postgresql -U postgres -d postgres -p 5432
+```
+
+Подключиться к поду с PG:
+```
+kubectl exec -it my-release-postgresql-client -- psql --host my-release-postgresql -U postgres -d postgres -p 5432
+```
+Cоздать базу test_k8s и юзера test_k8s, дать права:
+```
+\c test_k8s;
+GRANT ALL ON SCHEMA public TO  test_k8s;
+```
+Запустить миграции:
+```
+kubectl apply -f django-migrate-job.yaml
+```
+Посмотреть в логах пода, что всё ОК. Зайти на сайт.
