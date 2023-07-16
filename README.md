@@ -41,6 +41,8 @@ minikube addons enable ingress
 minikube addons list
 | ingress                     | minikube | enabled ✅   | Kubernetes                     |
 ```
+Залогинимся, чтобы получилось скачать образ с докерхаба:
+```docker login```
 Сначала применяем ConfigMap, потом остальное:
 ```
 kubectl apply -f django-cm.yaml
